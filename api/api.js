@@ -31,7 +31,7 @@ router.get('/question/:id', (req, res) => {
 
 router.get('/answer/:id', (req, res) => {
   let id = sanitize(req.params.id)
-  let ans = Answer.findById(id).select('-onModel -_id -__v')
+  let ans = Answer.findById(id).select('-onModel -_qid -__v')
     .then(docs => res.send(docs))
     .catch(e => res.send(e))
 })
