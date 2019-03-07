@@ -54,10 +54,8 @@ app.use('/tags',tagsService);
 var userApi = require('./api/user.js');
 app.use('/user',userApi);
 
-app.get('/test',(req,res)=>{
-  console.log(req.session.user);
-  // req.session.user = 'abc'
-  res.send('done')
+app.patch('/test/:id',authenticate,(req,res)=>{
+  console.log('worked');
 })
 
 app.get('/testCookie',checkSession,authenticate,(req,res)=>{

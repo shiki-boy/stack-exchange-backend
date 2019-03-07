@@ -13,7 +13,15 @@ const express = require('express'),
 const router = express.Router()
 
 router.get('/questions', (req, res) => {
-  Question.find({}).select('-q').lean()
+  let sortField = req.query.sort
+  let sortBy = req.query.sortBy
+  let sort = sortBy === 'desc' ? '-'+sortField : sortField
+
+  Question.find({}).select('-q')
+    .limit(parseInt(req.query.limit))
+    .skip(parseInt(req.query.skip))
+    .sort(sort)
+    .lean()
     .exec()
     .then((docs) => {
       res.send(docs)
@@ -110,18 +118,19 @@ router.patch('/upvote/:id', authenticate,async (req, res) => {
         }
       }) 
       
-      res.send('done')
+      res.send('upvoted')
     }
     else{
       // res.send('already upvoted')
-      User.findByIdAndUpdate(user.id, {
+      await User.findByIdAndUpdate(user.id, {
         $pull: {upvotes: qid}
       })
-      Question.findByIdAndUpdate(qid, {
+      await Question.findByIdAndUpdate(qid, {
         $inc: {votes: -1}
       })
+
+      res.send('removed upvote')
     }
-    
     
   } catch (error) {
     console.log(error)

@@ -16,10 +16,10 @@ var authenticate = function (req, res, next) {
 
 var checkSession = async function(req,res,next){
   try {
-    console.log('runnin');
+    // console.log('runnin');
     let ts = req.header('x-ts');
     if (ts) {
-      console.log(req.session.user);
+      // console.log(req.session.user);
       if (!req.session.user)
         res.send({msg: 'no session persists'})
       else

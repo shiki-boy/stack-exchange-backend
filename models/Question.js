@@ -29,10 +29,6 @@ var questionSchema = new mongoose.Schema({
   tags: [{
     type: String
   }],
-  date: {
-    type: Date,
-    default: Date.now
-  },
   _creator: {
     type: ObjectId,
     required: true,
@@ -43,6 +39,8 @@ var questionSchema = new mongoose.Schema({
     required: true,
     enum: ["User", "UserAP"]
   }
+},{
+  timestamps:true
 })
 
 questionSchema.index({

@@ -11,12 +11,12 @@ var answerSchema = new mongoose.Schema({
   votes: Number,
   _qid: {
     type: ObjectId,
-    required:true,
+    required: true,
     ref: 'Question' // ? for populating
   },
   _creator: {
     type: ObjectId,
-    required:true,
+    required: true,
     refPath: "onModel",
   },
   onModel: {
@@ -24,10 +24,12 @@ var answerSchema = new mongoose.Schema({
     required: true,
     enum: ["User", "UserAP"]
   },
-  isAnswer:{
-    type:Boolean,
-    default:false
+  isAnswer: {
+    type: Boolean,
+    default: false
   }
+}, {
+  timestamps: true
 })
 
 var Answer = stack_exchangeConn.model('Answer', answerSchema);
